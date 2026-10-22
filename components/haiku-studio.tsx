@@ -33,21 +33,29 @@ function formatDate(milliseconds: number): string {
   return dateFormatter.format(new Date(milliseconds));
 }
 
-/** The request for one haiku: a strict shape, so the page always has three lines to show. */
-function buildRequest(topic: string, tone: HaikuTone) {
+/** Five sample haikus: the example repeats the first `count`, so the answer always has that many. */
+const SAMPLE_LINES: HaikuLines[] = [
+  ["First snow on the sill,", "the kettle warms the quiet,", "footprints fill with light."],
+  ["A crow lifts the dusk,", "streetlamps come on one by one,", "the day folds its wings."],
+  ["Rain writes on the glass,", "each drop a slow short sentence,", "the window reads on."],
+  ["Low tide leaves the bay,", "gulls argue over empty shells,", "the moon takes the floor."],
+  ["Wind turns every leaf,", "the whole tree learns a new word,", "then says it out loud."],
+];
+
+/** One request for however many haikus were chosen — never one call per haiku. */
+function buildRequest(topic: string, tone: HaikuTone, count: number) {
   return {
-    input: `Write a haiku about: ${topic}`,
+    input: `Write ${count} haiku${count === 1 ? "" : "s"} about: ${topic}`,
     options: {
       system:
-        "You write haikus. Answer with exactly three short lines and nothing else: no title, no " +
-        "punctuation after the lines, no commentary. Aim for a 5-7-5 syllable feel. " +
+        "You write haikus. Answer with JSON: an object with a `haikus` array of exactly " +
+        `${count} haiku${count === 1 ? "" : "s"}, each an object with a \`lines\` array of exactly ` +
+        "three short lines and nothing else: no titles, no punctuation after the lines, no " +
+        "commentary. Aim for a 5-7-5 syllable feel. " +
         `The tone is ${TONE_WORDS[tone]}.`,
       json: true,
-      example: {
-        topic: "first snow",
-        lines: ["First snow on the sill,", "the kettle warms the quiet,", "footprints fill with light."],
-      },
-      maxTokens: 200,
+      example: { haikus: SAMPLE_LINES.slice(0, count).map((lines) => ({ lines })) },
+      maxTokens: 500,
       temperature: 0.9,
     },
   } as const;
