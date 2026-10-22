@@ -1,4 +1,4 @@
-import { color, defineConfig, looksLikeContact, text } from "@/lib/config/schema";
+import { color, choice, defineConfig, looksLikeContact, text } from "@/lib/config/schema";
 import { identity } from "./identity";
 
 /**
