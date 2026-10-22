@@ -11,7 +11,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { ShareButton } from "@/components/share-button";
 import { database, type Haiku, type HaikuTone } from "@/lib/db";
 import { deleteHaiku, listRecentHaikus, putHaiku, saveHaiku, HAIKU_LIMIT } from "@/lib/data/haikus";
-import { AI_PRIVACY_NOTE, askModel, useAsk, type AskResult } from "@/lib/ai";
+import { AI_PRIVACY_NOTE, useAsk, type AskResult } from "@/lib/ai";
 import { useAppConfig } from "@/lib/config/react";
 import { renderShareCard } from "@/lib/share";
 import { useStorageStatus, useStoredQuery } from "@/lib/storage/react";
