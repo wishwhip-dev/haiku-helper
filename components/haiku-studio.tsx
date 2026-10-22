@@ -74,6 +74,21 @@ function isThreeLines(data: unknown): data is { lines: [string, string, string] 
   );
 }
 
+/**
+ * The answer read as the batch that was asked for. Extra haikus beyond `count` are dropped; fewer
+ * than asked for is a failure, because the page promised this many.
+ */
+function readHaikuBatch(data: unknown, count: number): HaikuLines[] | null {
+  if (!data || typeof data !== "object") return null;
+  const haikus = (data as { haikus?: unknown }).haikus;
+  if (!Array.isArray(haikus)) return null;
+  const batch = haikus
+    .slice(0, count)
+    .filter(isThreeLines)
+    .map((haiku) => haiku.lines as HaikuLines);
+  return batch.length === count ? batch : null;
+}
+
 /** The message a failed call leaves on the page. Offline gets its own honest wording. */
 function failureText(result: Extract<AskResult, { ok: false }>): string {
   if (result.reason === "offline") {
