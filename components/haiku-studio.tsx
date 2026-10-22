@@ -139,8 +139,8 @@ export function HaikuStudio() {
 
     setOutcome(null);
     setSaving(true);
+    const stored: Haiku[] = [];
     try {
-      const stored: Haiku[] = [];
       for (const lines of batch) {
         stored.push(await saveHaiku({ topic: trimmed, lines, tone: requestTone }));
       }
