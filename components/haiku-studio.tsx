@@ -264,7 +264,9 @@ export function HaikuStudio() {
             {outcome.text}
           </p>
         ) : null}
-        {haiku ? <HaikuCard haiku={haiku} fresh /> : null}
+        {fresh.map((entry) => (
+          <HaikuCard key={entry.id} haiku={entry} fresh />
+        ))}
       </section>
 
       <section className="mt-10">
