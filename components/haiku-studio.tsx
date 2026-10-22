@@ -212,6 +212,39 @@ export function HaikuStudio() {
               />
               <p className="text-xs text-muted-foreground">{AI_PRIVACY_NOTE}</p>
             </div>
+            <div className="space-y-2">
+              <div className="flex items-center justify-between gap-2">
+                <span className="flex items-center gap-1.5">
+                  <Label>How many</Label>
+                  <TooltipProvider delayDuration={100}>
+                    <Tooltip open={countTipOpen} onOpenChange={setCountTipOpen}>
+                      <TooltipTrigger asChild>
+                        <button
+                          type="button"
+                          aria-label="What “How many” means"
+                          onClick={() => setCountTipOpen((open) => !open)}
+                          className="inline-flex size-6 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                        >
+                          <Info className="size-4" aria-hidden="true" />
+                        </button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        How many haikus to write in one go, from 1 to 5. Each one is saved to your list.
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </span>
+                <span className="text-sm tabular-nums text-muted-foreground">{count} of 5</span>
+              </div>
+              <Slider
+                min={1}
+                max={5}
+                step={1}
+                value={[count]}
+                onValueChange={(value) => setCount(value[0] ?? 1)}
+                aria-label="How many haikus to write"
+              />
+            </div>
             {topicProblem ? (
               <p role="alert" className="text-sm text-destructive">
                 {topicProblem}
