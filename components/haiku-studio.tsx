@@ -20,6 +20,9 @@ import { useStorageStatus, useStoredQuery } from "@/lib/storage/react";
 import { toast } from "sonner";
 import { Info } from "lucide-react";
 
+/** Three lines: the shape a haiku takes everywhere in this file. */
+type HaikuLines = Haiku["lines"];
+
 /** How each tone reads inside the request, and the one line the model is asked to work in. */
 const TONE_WORDS: Record<HaikuTone, string> = {
   Classic: "traditional and serene",
