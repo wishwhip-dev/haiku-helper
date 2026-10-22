@@ -1,4 +1,4 @@
-import { color, defineConfig, looksLikeContact, text } from "@/lib/config/schema";
+import { color, choice, defineConfig, looksLikeContact, text } from "@/lib/config/schema";
 import { identity } from "./identity";
 
 /**
@@ -27,7 +27,15 @@ const startingTitle = looksLikeContact(identity.name) ? "My list" : identity.nam
 
 export const appConfig = defineConfig({
   title: text({ label: "Title", default: startingTitle, max: 60, role: "title" }),
+  heading: text({ label: "Page heading", default: "Write a haiku", max: 60 }),
+  topicLabel: text({ label: "Topic input label", default: "Topic", max: 40 }),
   // `role: "accent"` paints `--primary` (buttons, links, focus rings) for a copy that picks another
   // color. A copy that keeps this default looks exactly as the app was built.
   accent: color({ label: "Color", default: identity.accent.toLowerCase(), role: "accent" }),
+  // The tone is part of every request to the model, sent as the words below.
+  tone: choice({
+    label: "Haiku tone",
+    options: ["Classic", "Playful", "Melancholy"],
+    default: "Classic",
+  }),
 });

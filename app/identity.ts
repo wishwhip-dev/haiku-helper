@@ -8,7 +8,7 @@
  */
 export const identity = {
   name: "Haiku helper",
-  description: "A haiku helper: I type a topic and it writes a three-line haiku about it, and keeps the last ten haikus in a list.",
+  description: "Type a topic and get a three-line haiku about it, with the last ten kept to read, copy and share.",
   accent: "#1c1915",
   initial: "H",
 } as const;
