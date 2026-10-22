@@ -2,11 +2,12 @@
 
 Use them — a screen built from styled divs is a screen that took longer and looks worse.
 
-**15 shadcn/ui components in `components/ui/`, already themed:**
+**26 shadcn/ui components in `components/ui/`, already themed:**
 
 ```
-alert  badge  button  card  chart  checkbox  dialog  input  label  select  separator
-skeleton  table  tabs  textarea
+accordion  alert  badge  button  card  chart  checkbox  collapsible  dialog  input
+label  popover  progress  radio-group  scroll-area  select  separator  skeleton  slider
+switch  table  tabs  textarea  toggle  toggle-group  tooltip
 ```
 
 That is the whole list. Anything not on it is not here — see "Adding one that is not here" below.
