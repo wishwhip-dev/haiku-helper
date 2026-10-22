@@ -157,7 +157,10 @@ export function HaikuStudio() {
 
       <Card>
         <CardHeader>
-          <CardTitle>New haiku</CardTitle>
+          <CardTitle className="flex items-center gap-2">
+            New haiku
+            <Badge variant="secondary">{requestTone}</Badge>
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} noValidate className="space-y-3">
