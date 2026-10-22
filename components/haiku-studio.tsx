@@ -8,6 +8,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Slider } from "@/components/ui/slider";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { ShareButton } from "@/components/share-button";
 import { database, type Haiku, type HaikuTone } from "@/lib/db";
 import { deleteHaiku, listRecentHaikus, putHaiku, saveHaiku, HAIKU_LIMIT } from "@/lib/data/haikus";
