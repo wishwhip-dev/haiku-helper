@@ -85,7 +85,7 @@ function readHaikuBatch(data: unknown, count: number): HaikuLines[] | null {
   const batch = haikus
     .slice(0, count)
     .filter(isThreeLines)
-    .map((haiku) => haiku.lines as HaikuLines);
+    .map((haiku) => haiku.lines);
   return batch.length === count ? batch : null;
 }
 
