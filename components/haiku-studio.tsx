@@ -147,8 +147,10 @@ export function HaikuStudio() {
       setFresh(stored);
       toast.success(count === 1 ? "Haiku saved" : `${count} haikus saved`);
     } catch (error) {
-      // Any haiku already stored before the failure still shows; the person just needs to know
-      // what the failure was.
+      // The haikus were still written, so they stay on the page; the unsaved ones get a temporary
+      // id and the toast says what went wrong. Nothing here reaches the list.
+      const at = Date.now();
+      setFresh(batch.map((lines, index) => stored[index] ?? { id: `unsaved-${index}`, topic: trimmed, lines, tone: requestTone, createdAt: at }));
       toast.error(`Could not save the haiku${count === 1 ? "" : "s"}: ${error instanceof Error ? error.message : "unknown error"}`);
     } finally {
       setSaving(false);
