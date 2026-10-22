@@ -1,0 +1,141 @@
+@import "tailwindcss";
+/* Dialog, select and tabs animate with `animate-in` / `fade-in-0` / `zoom-in-95`. Under Tailwind
+   v4 those live here, not in core — without this import the kit still works but snaps open. */
+@import "tw-animate-css";
+
+/*
+ * The theme: "paper". Warm off-white surfaces, near-black ink text, and no accent colour: buttons
+ * are ink on paper. Light only: one palette on `:root` and no `.dark` block, because the honest
+ * default is one palette that is always readable (a `color-scheme: light dark` here once promised a
+ * dark mode this file never had). Every text pair below passes WCAG AA. Fonts are the system stack:
+ * nothing to download.
+ *
+ * It is a starting point. If the owner asks for colours, a mood or a brand, change the values here
+ * (and `accent` in `app/identity.ts`); components keep reading the tokens.
+ *
+ * Design tokens, the theme mapping, the safe-area utilities, then the base rules. Nothing else is
+ * global.
+ *
+ * `@theme inline` is not decoration. Under Tailwind v4 a utility exists only if the theme declares
+ * it, so without this block `bg-background`, `text-muted-foreground` and `bg-primary` are not
+ * classes at all — Tailwind emits no rule, lint passes, the build passes, and every shadcn
+ * component renders unstyled. That was the state of this file before the component kit landed.
+ *
+ * Do not write colours into components: a component that hardcodes `bg-neutral-900` stops
+ * following the theme, which is exactly how the previous button ended up painting near-black on a
+ * near-black page.
+ */
+
+:root {
+  color-scheme: light;
+
+  --radius: 0.75rem;
+
+  --background: #faf7f2;
+  --foreground: #1c1915;
+  --card: #fefcf9;
+  --card-foreground: #1c1915;
+  --popover: #fefcf9;
+  --popover-foreground: #1c1915;
+  --primary: #1c1915;
+  --primary-foreground: #fefcf9;
+  --secondary: #f4efe9;
+  --secondary-foreground: #1c1915;
+  --muted: #f4efe9;
+  --muted-foreground: #5d5751;
+  --accent: #f4efe9;
+  --accent-foreground: #1c1915;
+  --destructive: #be2038;
+  --destructive-foreground: #fefcf9;
+  --border: #e8e2da;
+  --input: #cdc6be;
+  --ring: #5d5751;
+
+  /* Chart series: five distinct hues, each at least 4.5:1 on the page. */
+  --chart-1: #2f6e9e;
+  --chart-2: #99533b;
+  --chart-3: #007b76;
+  --chart-4: #7b5894;
+  --chart-5: #836412;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+/*
+ * A phone's screen edges. The layout sets `viewport-fit=cover`, so on a phone with a notch or a home
+ * indicator the page reaches under them: anything fixed to an edge takes the matching utility
+ * (`fixed bottom-0 pb-safe`). The values are 0 everywhere else.
+ */
+@utility pt-safe {
+  padding-top: env(safe-area-inset-top);
+}
+
+@utility pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+@utility px-safe {
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+/*
+ * The only global rules, and they are in a layer on purpose.
+ *
+ * An unlayered bare-element rule beats every Tailwind utility — v4 emits utilities inside
+ * `@layer utilities`, and unlayered CSS outranks any layer. This file used to style `main`, `h1`
+ * and `p` that way for a placeholder hero, which meant `text-muted-foreground` on a paragraph
+ * silently lost to a hardcoded grey. Do not add bare element selectors here.
+ */
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  body {
+    margin: 0;
+    background: var(--background);
+    color: var(--foreground);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Clear of the notch when a phone is turned sideways (0 in portrait). */
+  body {
+    padding-inline: env(safe-area-inset-left) env(safe-area-inset-right);
+  }
+
+  /* A tap on a control acts at once and never zooms the page on a double tap. */
+  a, button, input, label, select, textarea, [role="button"] {
+    touch-action: manipulation;
+  }
+}
