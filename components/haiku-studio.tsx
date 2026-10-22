@@ -218,12 +218,11 @@ export function HaikuStudio() {
                 <span className="flex items-center gap-1.5">
                   <Label>How many</Label>
                   <TooltipProvider delayDuration={100}>
-                    <Tooltip open={countTipOpen} onOpenChange={setCountTipOpen}>
+                    <Tooltip>
                       <TooltipTrigger asChild>
                         <button
                           type="button"
                           aria-label="What “How many” means"
-                          onClick={() => setCountTipOpen((open) => !open)}
                           className="inline-flex size-6 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                         >
                           <Info className="size-4" aria-hidden="true" />
