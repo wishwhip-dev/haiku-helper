@@ -181,7 +181,7 @@ export function HaikuStudio() {
       <header className="mb-6">
         <h1 className="text-3xl font-semibold tracking-tight text-balance sm:text-4xl">{heading}</h1>
         <p className="mt-1 text-muted-foreground">
-          Type a topic and get a haiku. The last {HAIKU_LIMIT} stay on this device.
+          Type a topic and get up to five haikus at once. The last {HAIKU_LIMIT} stay on this device.
         </p>
       </header>
 
