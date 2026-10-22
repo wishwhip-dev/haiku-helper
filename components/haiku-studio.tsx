@@ -103,7 +103,8 @@ export function HaikuStudio() {
 
   const [topic, setTopic] = useState("");
   const [topicProblem, setTopicProblem] = useState("");
-  const [haiku, setHaiku] = useState<Haiku | null>(null);
+  const [count, setCount] = useState(1);
+  const [fresh, setFresh] = useState<Haiku[]>([]);
   const [outcome, setOutcome] = useState<{ kind: "thinking" | "failed"; text: string } | null>(null);
   const [saving, setSaving] = useState(false);
   const { ask, busy } = useAsk();
@@ -115,37 +116,40 @@ export function HaikuStudio() {
     event.preventDefault();
     const trimmed = topic.trim();
     if (!trimmed) {
-      setHaiku(null);
+      setFresh([]);
       setOutcome(null);
       setTopicProblem("Enter a topic first — what should the haiku be about?");
       return;
     }
     setTopicProblem("");
-    setHaiku(null);
+    setFresh([]);
     setOutcome({ kind: "thinking", text: "Thinking…" });
 
-    const request = buildRequest(trimmed, requestTone);
+    const request = buildRequest(trimmed, requestTone, count);
     const result = await ask(request.input, request.options);
     if (!result.ok) {
       setOutcome({ kind: "failed", text: failureText(result) });
       return;
     }
-    if (!isThreeLines(result.data)) {
-      setOutcome({ kind: "failed", text: "The assistant's answer couldn't be read as a haiku. Try again." });
+    const batch = readHaikuBatch(result.data, count);
+    if (!batch) {
+      setOutcome({ kind: "failed", text: `The assistant's answer couldn't be read as ${count} haiku${count === 1 ? "" : "s"}. Try again.` });
       return;
     }
 
-    const lines = result.data.lines;
     setOutcome(null);
     setSaving(true);
     try {
-      const stored = await saveHaiku({ topic: trimmed, lines, tone: requestTone });
-      setHaiku(stored);
-      toast.success("Haiku saved");
+      const stored: Haiku[] = [];
+      for (const lines of batch) {
+        stored.push(await saveHaiku({ topic: trimmed, lines, tone: requestTone }));
+      }
+      setFresh(stored);
+      toast.success(count === 1 ? "Haiku saved" : `${count} haikus saved`);
     } catch (error) {
-      // The haiku still shows; the person just needs to know it will not survive a reload.
-      setHaiku({ id: "unsaved", topic: trimmed, lines, tone: requestTone, createdAt: Date.now() });
-      toast.error(`Could not save the haiku: ${error instanceof Error ? error.message : "unknown error"}`);
+      // Any haiku already stored before the failure still shows; the person just needs to know
+      // what the failure was.
+      toast.error(`Could not save the haiku${count === 1 ? "" : "s"}: ${error instanceof Error ? error.message : "unknown error"}`);
     } finally {
       setSaving(false);
     }
