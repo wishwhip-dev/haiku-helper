@@ -104,6 +104,7 @@ export function HaikuStudio() {
   const [topic, setTopic] = useState("");
   const [topicProblem, setTopicProblem] = useState("");
   const [count, setCount] = useState(1);
+  const [countTipOpen, setCountTipOpen] = useState(false);
   const [fresh, setFresh] = useState<Haiku[]>([]);
   const [outcome, setOutcome] = useState<{ kind: "thinking" | "failed"; text: string } | null>(null);
   const [saving, setSaving] = useState(false);
