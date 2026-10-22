@@ -18,6 +18,7 @@ import { useAppConfig } from "@/lib/config/react";
 import { renderShareCard } from "@/lib/share";
 import { useStorageStatus, useStoredQuery } from "@/lib/storage/react";
 import { toast } from "sonner";
+import { Info } from "lucide-react";
 
 /** How each tone reads inside the request, and the one line the model is asked to work in. */
 const TONE_WORDS: Record<HaikuTone, string> = {
